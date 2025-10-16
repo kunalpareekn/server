@@ -7,6 +7,7 @@ import connectDB from "./db/database.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
 import { apiLimiter } from "./middlewares/rateLimiter.js";
 
+// Import all routes
 import adminRouter from "./routes/Auth/AdminRoutes.js";
 import employeeRouter from "./routes/Auth/EmployeeRoutes.js";
 import leaveEmployeeRouter from "./routes/Employee/LeaveEmployeeRoutes.js";
@@ -30,7 +31,7 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// -------------------- Connect DB --------------------
+// -------------------- Connect MongoDB --------------------
 connectDB();
 
 // -------------------- Middleware --------------------
@@ -39,15 +40,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(apiLimiter);
 
-// ✅ Correct CORS Setup for Render + Vercel
+// ✅ Proper CORS setup for Vercel + Render
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || "https://ems-frontend.vercel.app",
+    origin: process.env.FRONTEND_URL || "https://ems-frontend-steel-gamma.vercel.app",
     credentials: true,
   })
 );
 
-// -------------------- Routes --------------------
+// -------------------- API Routes --------------------
 
 // -------- ADMIN ROUTES -------------
 app.use("/api/v1/admin/auth", adminRouter);
@@ -81,7 +82,7 @@ app.get("/", (req, res) => {
   });
 });
 
-// 404 Handler
+// Handle 404 routes
 app.use((req, res) => {
   res.status(404).json({
     success: false,
