@@ -43,7 +43,7 @@ app.use(apiLimiter);
 // ✅ Proper CORS setup for Vercel + Render
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || "https://ems-frontend-steel-gamma.vercel.app",
+    origin: process.env.FRONTEND_URL || "https://vite-client-6k3r.onrender.com",
     credentials: true,
   })
 );
